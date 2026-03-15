@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryan Chen — Mechanical Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #1a1a1a;
+      --accent: #e8c547;
+      --accent2: #c8a832;
+      --text: #f0ede6;
+      --text-muted: #888880;
+      --border: #2a2a2a;
+      --card: #141414;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+    }
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.15s ease;
+      opacity: 0.5;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 8vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-name span { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: none;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+
+    .hero-stats {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 4rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1s forwards;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Ticker */
+    .ticker {
+      background: var(--accent);
+      padding: 0.6rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 25s linear infinite;
+    }
+
+    .ticker-inner span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--bg);
+      text-transform: uppercase;
+      margin: 0 3rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      letter-spacing: 0.03em;
+      margin-bottom: 3rem;
+      line-height: 1;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .highlight-item:hover { border-color: var(--accent); }
+
+    .highlight-icon {
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .highlight-content h4 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .highlight-content p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Experience */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+
+    .exp-meta {
+      padding-top: 0.15rem;
+    }
+
+    .exp-company {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-period {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .exp-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .skill-category {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-category:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .skill-cat-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .skill-list li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '↗';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: var(--accent);
+      font-size: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .project-card:hover::after {
+      opacity: 1;
+      transform: translate(2px, -2px);
+    }
+
+    .project-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.75rem;
+      line-height: 1.1;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Certifications */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .cert-item:hover { border-color: var(--accent); }
+
+    .cert-icon {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      width: 40px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .cert-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-issuer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Contact */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .contact-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      letter-spacing: 0.03em;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-text h2 span { color: var(--accent); }
+
+    .contact-text p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .contact-link-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      width: 60px;
+      flex-shrink: 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Full width wrapper */
+    .full-width {
+      max-width: 100%;
+      padding: 6rem 4rem;
+    }
+
+    .full-width-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 2rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+      section { padding: 4rem 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <div class="nav-logo">RC</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Mechanical Engineer · EI · CSWA</div>
+      <h1 class="hero-name">Ryan<br><span>Chen</span></h1>
+      <p class="hero-desc">
+        Manufacturing quality engineer at Whirlpool with experience across P&G, Marathon Petroleum, and Danfoss. 
+        Bridging mechanical engineering with data-driven analysis and financial modeling.
+      </p>
+      <div class="hero-cta">
+        <a href="resume.pdf" target="_blank" class="btn-primary">Download Resume</a>
+        <a href="#contact" class="btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-grid"></div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-number">3.70</div>
+          <div class="stat-label">GPA · Magna Cum Laude</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Years Engineering Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">$750K</div>
+          <div class="stat-label">Annual Savings Delivered at Whirlpool</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">$40K</div>
+          <div class="stat-label">Annual Savings Delivered at Marathon</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">60%</div>
+          <div class="stat-label">Cooling Time Reduction · P&G</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>SolidWorks CSWA</span>
+      <span>●</span>
+      <span>ANSYS Fluent FEA</span>
+      <span>●</span>
+      <span>Monte Carlo Simulation</span>
+      <span>●</span>
+      <span>Power BI</span>
+      <span>●</span>
+      <span>Six Sigma</span>
+      <span>●</span>
+      <span>Python</span>
+      <span>●</span>
+      <span>Mandarin Chinese</span>
+      <span>●</span>
+      <span>Engineer Intern · Ohio</span>
+      <span>●</span>
+      <span>AFT Fathom</span>
+      <span>●</span>
+      <span>AutoCAD</span>
+      <span>●</span>
+      <span>SolidWorks CSWA</span>
+      <span>●</span>
+      <span>ANSYS Fluent FEA</span>
+      <span>●</span>
+      <span>Monte Carlo Simulation</span>
+      <span>●</span>
+      <span>Power BI</span>
+      <span>●</span>
+      <span>Six Sigma</span>
+      <span>●</span>
+      <span>Python</span>
+      <span>●</span>
+      <span>Mandarin Chinese</span>
+      <span>●</span>
+      <span>Engineer Intern · Ohio</span>
+      <span>●</span>
+      <span>AFT Fathom</span>
+      <span>●</span>
+      <span>AutoCAD</span>
+      <span>●</span>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="fade-in">
+      <div class="section-label">01 · About</div>
+      <div class="section-title">Engineer.<br>Analyst. Builder.</div>
+    </div>
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <p>
+          I'm a <strong>Mechanical Engineer (EI)</strong> currently in Whirlpool's Manufacturing Leadership Development Program, 
+          leading quality operations for a high-volume upright freezer assembly line with 10+ direct reports.
+        </p>
+        <p>
+          My background spans <strong>thermal-fluid analysis, mechanical design, manufacturing quality, and data engineering</strong> — 
+          built through hands-on co-ops at Marathon Petroleum and Danfoss Power Solutions, and a capstone project with P&G.
+        </p>
+        <p>
+          Beyond traditional engineering, I'm actively developing skills in <strong>Python, financial risk modeling, and data analytics</strong> — 
+          applying the same probabilistic and simulation-based thinking from mechanical systems to financial portfolio analysis.
+          I'm bilingual in <strong>English and Mandarin Chinese</strong> and a natural leader — 
+          having won multiple awards for team leadership, project impact, and academic excellence throughout my career.
+        </p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <div class="highlight-icon">◆</div>
+          <div class="highlight-content">
+            <h4>Ohio Northern University</h4>
+            <p>B.S. Mechanical Engineering (ABET) · GPA 3.70 · Magna Cum Laude · Dean's List ×7</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">◆</div>
+          <div class="highlight-content">
+            <h4>Engineer Intern (EI)</h4>
+            <p>State of Ohio · Credential ID: EI.15734 · July 2025</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">◆</div>
+          <div class="highlight-content">
+            <h4>CSWA Certified</h4>
+            <p>Certified SolidWorks Associate in Mechanical Design · Dassault Systèmes</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">◆</div>
+          <div class="highlight-content">
+            <h4>Bilingual</h4>
+            <p>English & Mandarin Chinese · Valuable for global engineering environments</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="fade-in">
+      <div class="section-label">02 · Experience</div>
+      <div class="section-title">Where I've<br>Worked</div>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item fade-in">
+        <div class="exp-meta">
+          <div class="exp-company">Whirlpool</div>
+          <div class="exp-period">July 2025 – Present</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Manufacturing Quality Engineer</div>
+          <p class="exp-desc">
+            Leading quality operations for upright freezer assembly line with 10+ direct reports. 
+            Drive FPY and defect metric improvements through Kaizen events, structured root cause analysis (5 Whys, 5W1H, 4M1D), 
+            and statistical data analysis to identify trends and corrective actions resulting in $750K+ in annual savings.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">Kaizen</span>
+            <span class="tag">Root Cause Analysis</span>
+            <span class="tag">Statistical Analysis</span>
+            <span class="tag">FPY Improvement</span>
+            <span class="tag">Team Leadership</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item fade-in">
+        <div class="exp-meta">
+          <div class="exp-company">P&G</div>
+          <div class="exp-period">May 2024 – May 2025</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Capstone Project Engineer</div>
+          <p class="exp-desc">
+            Eliminated production bottleneck caused by scented bead cooling time. Modeled heat transfer using ANSYS Fluent (FEA), 
+            validated results with physical testing (&lt;5% error), and built scaled prototypes — resulting in an estimated 
+            60% reduction in cooling time through optimized container design.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">ANSYS Fluent</span>
+            <span class="tag">FEA</span>
+            <span class="tag">Thermal Analysis</span>
+            <span class="tag">Prototype Testing</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item fade-in">
+        <div class="exp-meta">
+          <div class="exp-company">Marathon</div>
+          <div class="exp-period">Aug 2023 – Aug 2024</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Mechanical Design & Project Engineer</div>
+          <p class="exp-desc">
+            Led AST inspection and repair projects across multiple terminals. Developed Power BI cost-analysis tool for capital decisions, 
+            created AutoCAD & Plant 3D drawing packages, and built standardized pump curve library in AFT Fathom — 
+            saving an estimated $40,000 annually.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">AutoCAD</span>
+            <span class="tag">AFT Fathom</span>
+            <span class="tag">Plant 3D</span>
+            <span class="tag">Hydraulic Analysis</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item fade-in">
+        <div class="exp-meta">
+          <div class="exp-company">Danfoss</div>
+          <div class="exp-period">May 2022 – Aug 2022</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Test Engineer Co-Op</div>
+          <p class="exp-desc">
+            Executed hydraulic hose and fitting validation tests. Designed custom "Force-to-Bend" test table in SolidWorks 
+            and integrated microcontrollers, force sensors, and a custom Visual Studio GUI for automated test data capture.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">SolidWorks</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">Test Validation</span>
+            <span class="tag">Visual Studio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="fade-in">
+      <div class="section-label">03 · Skills</div>
+      <div class="section-title">Technical<br>Toolkit</div>
+    </div>
+    <div class="skills-grid fade-in">
+      <div class="skill-category">
+        <div class="skill-cat-title">CAD & Design</div>
+        <ul class="skill-list">
+          <li>SolidWorks (CSWA Certified)</li>
+          <li>AutoCAD & Plant 3D</li>
+          <li>Autodesk Inventor</li>
+          <li>Fusion 360</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Analysis & Simulation</div>
+        <ul class="skill-list">
+          <li>ANSYS Fluent (FEA)</li>
+          <li>AFT Fathom</li>
+          <li>MATLAB & Simulink</li>
+          <li>Monte Carlo Simulation</li>
+          <li>EES</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Manufacturing & Quality</div>
+        <ul class="skill-list">
+          <li>Kaizen Events</li>
+          <li>Root Cause Analysis</li>
+          <li>Statistical Process Control</li>
+          <li>Test Planning & Validation</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Programming</div>
+        <ul class="skill-list">
+          <li>Python (pandas, numpy, matplotlib)</li>
+          <li>Arduino & Microcontrollers</li>
+          <li>PLCs (Siemens & Automation Direct)</li>
+          <li>LabVIEW & LTSpice</li>
+          <li>Visual Studio</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Data & Analytics</div>
+        <ul class="skill-list">
+          <li>Power BI</li>
+          <li>LookerStudio</li>
+          <li>Excel & Minitab</li>
+          <li>Financial Risk Modeling</li>
+          <li>Statistical Analysis</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Other</div>
+        <ul class="skill-list">
+          <li>Mandarin Chinese (Bilingual)</li>
+          <li>Precision Machining</li>
+          <li>Laser Cutting</li>
+          <li>Technical Documentation</li>
+          <li>Team Leadership (10+ reports)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="fade-in">
+      <div class="section-label">04 · Projects</div>
+      <div class="section-title">Selected<br>Work</div>
+    </div>
+    <div class="projects-grid fade-in">
+      <a href="https://github.com/RNC2020/financial-risk-model" target="_blank" class="project-card">
+        <div class="project-number">Project · 01</div>
+        <div class="project-title">Financial Risk Modeling & Monte Carlo Engine</div>
+        <p class="project-desc">
+          Built a financial risk modeling engine in Python applying Monte Carlo simulation — the same probabilistic methodology 
+          used in structural engineering — to portfolio analysis. Calculates VaR, Sharpe Ratio, annualized volatility, 
+          and stress tests against 2008, COVID, and 2022 market crises.
+        </p>
+        <div class="exp-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Monte Carlo</span>
+          <span class="tag">pandas</span>
+          <span class="tag">Risk Modeling</span>
+          <span class="tag">yfinance</span>
+        </div>
+      </a>
+      <a href="resume.pdf" target="_blank" class="project-card">
+        <div class="project-number">Project · 02</div>
+        <div class="project-title">P&G Scented Bead Cooling Optimization</div>
+        <p class="project-desc">
+          Designed and validated solutions to eliminate a production bottleneck at P&G. Used ANSYS Fluent FEA thermal modeling 
+          validated with physical testing (&lt;5% error), resulting in an estimated 60% reduction in cooling time 
+          through optimized container geometry.
+        </p>
+        <div class="exp-tags">
+          <span class="tag">ANSYS Fluent</span>
+          <span class="tag">FEA</span>
+          <span class="tag">Thermal Modeling</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </a>
+      <a href="resume.pdf" target="_blank" class="project-card">
+        <div class="project-number">Project · 03</div>
+        <div class="project-title">Marathon Petroleum Power BI Cost Tool</div>
+        <p class="project-desc">
+          Developed a Power BI cost-analysis dashboard comparing annual project spend across terminals to support capital 
+          allocation decisions. Built standardized pump curve library in AFT Fathom saving an estimated $40,000 annually 
+          in validation effort.
+        </p>
+        <div class="exp-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">AFT Fathom</span>
+          <span class="tag">Capital Analysis</span>
+          <span class="tag">AutoCAD</span>
+        </div>
+      </a>
+      <a href="resume.pdf" target="_blank" class="project-card">
+        <div class="project-number">Project · 04</div>
+        <div class="project-title">Danfoss Force-to-Bend Test Table</div>
+        <p class="project-desc">
+          Designed a custom hydraulic hose test fixture in SolidWorks and integrated microcontrollers, force sensors, 
+          and a custom Visual Studio GUI for automated test data capture — replacing a fully manual validation process.
+        </p>
+        <div class="exp-tags">
+          <span class="tag">SolidWorks</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">Visual Studio</span>
+          <span class="tag">Sensor Integration</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Certifications -->
+  <section>
+    <div class="fade-in">
+      <div class="section-label">05 · Credentials</div>
+      <div class="section-title">Licenses &<br>Certifications</div>
+    </div>
+    <div class="certs-grid fade-in">
+      <div class="cert-item">
+        <div class="cert-icon">EI</div>
+        <div>
+          <div class="cert-name">Engineer Intern (EI)</div>
+          <div class="cert-issuer">State of Ohio · ID: EI.15734 · July 2025</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">SW</div>
+        <div>
+          <div class="cert-name">Certified SolidWorks Associate (CSWA)</div>
+          <div class="cert-issuer">Dassault Systèmes · ID: C-BREKJMGN3P · April 2023</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-wrapper fade-in">
+      <div class="contact-text">
+        <div class="section-label">06 · Contact</div>
+        <h2>Let's<br>Work<br><span>Together</span></h2>
+        <p>
+          Open to opportunities in mechanical engineering, manufacturing, 
+          data analytics, design and finance-adjacent roles.
+        </p>
+        <a href="resume.pdf" target="_blank" class="btn-primary">Download Resume</a>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:ry_chen2020@icloud.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          ry_chen2020@icloud.com
+        </a>
+        <a href="https://linkedin.com/in/Ryan-Chen1" target="_blank" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          linkedin.com/in/Ryan-Chen1
+        </a>
+        <a href="https://github.com/RNC2020" target="_blank" class="contact-link">
+          <span class="contact-link-label">GitHub</span>
+          github.com/RNC2020
+        </a>
+        <a href="tel:4197718036" class="contact-link">
+          <span class="contact-link-label">Phone</span>
+          419-771-8036
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Ryan Chen · Mechanical Engineer</p>
+    <p>Van Wert, OH · Open to Charlotte, NC</p>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 4 + 'px';
+      cursor.style.top = my - 4 + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx - 16 + 'px';
+      ring.style.top = ry - 16 + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(2.5)';
+        ring.style.transform = 'scale(1.5)';
+        ring.style.opacity = '1';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        ring.style.transform = 'scale(1)';
+        ring.style.opacity = '0.5';
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
