@@ -47,14 +47,9 @@
   <section id="projects">
     <h2>Projects</h2>
     <div class="project">
-      <h3>Project Title 1</h3>
-      <p>Short description of what the project is, what tools you used, and your contribution.</p>
+      <h3>Financial Risk Analysis</h3>
+      <p>As a mechanical engineer I use simulation and probabilistic modeling to assess structural risk. This project applies the same thinking to financial portfolios. Using Monte Carlo simulation and statistical risk metrics to quantify downside exposure the way professional risk teams do at major financial institutions.</p>
     </div>
-    <div class="project">
-      <h3>Project Title 2</h3>
-      <p>Short description of another project. Showcase engineering, design, or coding work.</p>
-    </div>
-  </section>
 
   <section id="contact">
     <h2>Contact</h2>
@@ -64,7 +59,7 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Ryan Chen. All rights reserved.</p>
+    <p>&copy; 2026 Ryan Chen. All rights reserved.</p>
   </footer>
 </body>
 </html>
