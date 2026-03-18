@@ -555,9 +555,15 @@
       background: var(--card);
       border: 1px solid var(--border);
       transition: border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
 
-    .cert-item:hover { border-color: var(--accent); }
+    .cert-item:hover { 
+      border-color: var(--accent);
+      transform: translateX(4px);
+     }
 
     .cert-icon {
       font-family: 'Bebas Neue', sans-serif;
@@ -1032,12 +1038,13 @@
         <div class="project-number">Project · 01</div>
         <div class="project-title">Financial Risk Modeling & Monte Carlo Engine</div>
         <p class="project-desc">
-          Built a financial risk modeling engine in Python applying Monte Carlo simulation — the same probabilistic methodology 
+          Built a financial risk modeling engine and Streamlit app in Python applying Monte Carlo simulation — the same probabilistic methodology 
           used in structural engineering — to portfolio analysis. Calculates VaR, Sharpe Ratio, annualized volatility, 
           and stress tests against 2008, COVID, and 2022 market crises.
         </p>
         <div class="exp-tags">
           <span class="tag">Python</span>
+          <span class="tag">Streamlit</span>
           <span class="tag">Monte Carlo</span>
           <span class="tag">pandas</span>
           <span class="tag">Risk Modeling</span>
@@ -1100,21 +1107,27 @@
       <div class="section-title">Licenses &<br>Certifications</div>
     </div>
     <div class="certs-grid fade-in">
-      <div class="cert-item">
-        <div class="cert-icon">EI</div>
-        <div>
-          <div class="cert-name">Engineer Intern (EI)</div>
-          <div class="cert-issuer">State of Ohio · ID: EI.15734 · July 2025</div>
-        </div>
+    <a href="https://elicense.ohio.gov/oh_verifylicensedetails?pid=a0Rcs00000CEUTxEAP" 
+      target="_blank" 
+      class="cert-item">
+      <div class="cert-icon">EI</div>
+      <div>
+        <div class="cert-name">Engineer Intern (EI)</div>
+        <div class="cert-issuer">State of Ohio · ID: EI.15734 · July 2025</div>
       </div>
-      <div class="cert-item">
-        <div class="cert-icon">SW</div>
-        <div>
-          <div class="cert-name">Certified SolidWorks Associate (CSWA)</div>
-          <div class="cert-issuer">Dassault Systèmes · ID: C-BREKJMGN3P · April 2023</div>
-        </div>
+      <div style="color: var(--accent); font-size: 1rem;">↗</div>
+    </a>
+
+        <a href="https://cv.virtualtester.com/qr/?b=SWSB&i=C-BREKJMGN3P" 
+      target="_blank" 
+      class="cert-item">
+      <div class="cert-icon">SW</div>
+      <div>
+       <div class="cert-name">Certified SolidWorks Associate (CSWA)</div>
+       <div class="cert-issuer">Dassault Systèmes · ID: C-BREKJMGN3P · April 2023</div>
       </div>
-    </div>
+      <div style="color: var(--accent); font-size: 1rem;">↗</div>
+    </a>
   </section>
 
   <div class="divider"></div>
